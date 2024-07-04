@@ -7,6 +7,9 @@ public class RemoteConfigurationProvider(RemoteConfig config) : ConfigurationPro
     public override void Load()
     {
         base.Load();
+        if (File.Exists(config.ConfigurationFilePath))
+            this.LastLoaded = File.GetLastWriteTime(config.ConfigurationFilePath);
+        
         if (config.WaitForLoadOnStartup)
         {
             this.LoadAsync().GetAwaiter().GetResult();
@@ -40,13 +43,23 @@ public class RemoteConfigurationProvider(RemoteConfig config) : ConfigurationPro
     {
         try
         {
+            // var wasWaiting = this.semaphore.CurrentCount == 0;
             // there can only be one!
             await this.semaphore.WaitAsync(cancellationToken);
+
+            if (this.LastLoaded != null)
+            {
+                var ts = DateTimeOffset.UtcNow.Subtract(this.LastLoaded.Value);
+                if (ts.TotalSeconds < 30)
+                    return;
+            }
+            // // if I was waiting, just return, the config will have been called and loaded
+            // if (wasWaiting)
+            //     return;
 
             var httpClient = new HttpClient();
             var content = await httpClient.GetStringAsync(config.Uri, cancellationToken);
 
-            // TODO: this is not triggering changes from the json provider - could be the options monitor too?
             await File
                 .WriteAllTextAsync(config.ConfigurationFilePath, content, cancellationToken)
                 .ConfigureAwait(false);

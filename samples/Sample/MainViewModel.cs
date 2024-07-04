@@ -25,6 +25,7 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] string configurationUri;
     [ObservableProperty] string? theValue;
     [ObservableProperty] string valueFrom;
+    [ObservableProperty] string lastLoad;
 
     void Update(MyConfig config)
     {
@@ -32,6 +33,11 @@ public partial class MainViewModel : ObservableObject
         this.ConfigurationUri = config.ConfigurationUri;
         this.ValueFrom = config.ValueFrom;
         this.TheValue = config.TheValue;
+
+        this.LastLoad = this.remoteProvider
+            .LastLoaded?
+            .ToLocalTime()
+            .ToString("yyyy MMMM dd - h:mm:ss tt") ?? "Never";
     }
 
 

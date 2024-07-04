@@ -18,7 +18,9 @@
             </TableSection>
             
             <TableSection>
-                <!-- <TextCell Text="Last Loaded" /> -->
+                <TextCell Text="Last Loaded" 
+                          Detail="{Binding LastLoad}" />
+                
                 <TextCell Text="Reload" 
                           Command="{Binding RefreshCommand}" />
             </TableSection>
