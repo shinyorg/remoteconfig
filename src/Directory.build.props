@@ -1,0 +1,29 @@
+<Project>
+    <PropertyGroup>
+        <Authors>Allan Ritchie</Authors>
+        <Owners>aritchie;shinylib</Owners>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <DisableExtraReferences>False</DisableExtraReferences>
+        <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://shinylib.net</PackageProjectUrl>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageReadmeFile>readme.md</PackageReadmeFile>
+        <PackageReleaseNotes>https://shinylib.net/release-notes/client/v30/</PackageReleaseNotes>
+        <PackageTags>xamarin ios android remote configuration</PackageTags>
+        <RepositoryUrl>https://github.com/shinyorg/remoteconfig</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+
+        <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <IncludeSource>True</IncludeSource>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PublishRepositoryUrl>True</PublishRepositoryUrl>
+        <EmbedUntrackedSources>True</EmbedUntrackedSources>
+    </PropertyGroup>
+</Project>

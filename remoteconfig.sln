@@ -2,11 +2,26 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiny.Extensions.Configuration.Remote", "src\Shiny.Extensions.Configuration.Remote\Shiny.Extensions.Configuration.Remote.csproj", "{51AE2B06-A8FB-4282-A2FB-37D256805A5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiny.Extensions.Configuration.RemoteHosting", "src\Shiny.Extensions.Configuration.RemoteHosting\Shiny.Extensions.Configuration.RemoteHosting.csproj", "{12F6F831-B685-46FF-B7C4-885B292C9C98}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Api", "samples\Sample.Api\Sample.Api.csproj", "{ECD283B3-0C19-4F87-BFC6-2737187DBF4F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "samples\Sample\Sample.csproj", "{61FF0CA6-1E67-40C5-849A-1D76F085AD05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiny.Extensions.Configuration.Remote.Maui", "src\Shiny.Extensions.Configuration.Remote.Maui\Shiny.Extensions.Configuration.Remote.Maui.csproj", "{258258A3-FB19-4ABF-ADA7-66972136AF7B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{D90754E5-A1F0-494C-8511-51ED67ED62B1}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		src\Directory.build.props = src\Directory.build.props
+		src\Directory.build.targets = src\Directory.build.targets
+		src\nuget.png = src\nuget.png
+		src\nuget.txt = src\nuget.txt
+		version.json = version.json
+		.github\PULL_REQUEST_TEMPLATE.md = .github\PULL_REQUEST_TEMPLATE.md
+		.github\ISSUE_TEMPLATE\bug_report.yml = .github\ISSUE_TEMPLATE\bug_report.yml
+		.github\ISSUE_TEMPLATE\feature_request.yml = .github\ISSUE_TEMPLATE\feature_request.yml
+		.github\workflows\build.yml = .github\workflows\build.yml
+		Build.slnf = Build.slnf
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,10 +33,6 @@ Global
 		{51AE2B06-A8FB-4282-A2FB-37D256805A5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51AE2B06-A8FB-4282-A2FB-37D256805A5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51AE2B06-A8FB-4282-A2FB-37D256805A5F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{12F6F831-B685-46FF-B7C4-885B292C9C98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12F6F831-B685-46FF-B7C4-885B292C9C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12F6F831-B685-46FF-B7C4-885B292C9C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12F6F831-B685-46FF-B7C4-885B292C9C98}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ECD283B3-0C19-4F87-BFC6-2737187DBF4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ECD283B3-0C19-4F87-BFC6-2737187DBF4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECD283B3-0C19-4F87-BFC6-2737187DBF4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -30,5 +41,9 @@ Global
 		{61FF0CA6-1E67-40C5-849A-1D76F085AD05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61FF0CA6-1E67-40C5-849A-1D76F085AD05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61FF0CA6-1E67-40C5-849A-1D76F085AD05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{258258A3-FB19-4ABF-ADA7-66972136AF7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{258258A3-FB19-4ABF-ADA7-66972136AF7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{258258A3-FB19-4ABF-ADA7-66972136AF7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{258258A3-FB19-4ABF-ADA7-66972136AF7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,6 +1,7 @@
-﻿using Shiny.Extensions.Configuration.Remote;
+﻿using Shiny.Extensions.Configuration.Remote.Maui;
 
 namespace Sample;
+
 
 public static class MauiProgram
 {
@@ -10,27 +11,16 @@ public static class MauiProgram
             .CreateBuilder()
             .UseMauiApp<App>();
 
-        builder
-            .Configuration
-            // we load the default/builtin accesstoken here
-            .AddJsonPlatformBundle()
-            
-            // if remote has requested past values, those will be available here through configuration
-            // so you could basically change the URI & AccessKey below
-            .AddRemote(
-                Path.Combine(FileSystem.AppDataDirectory, "remotesettings.json"),
-                cfg => (
-                    cfg["ConfigurationUri"]!, 
-                    cfg["AccessToken"]!
-                ),
-                false
-           );
+        // we load the default/builtin accesstoken here
+        builder.Configuration.AddJsonPlatformBundle();
 
-        builder.Services.Configure<MyConfig>(x =>
-        {
-            
-            builder.Configuration.Bind(x);
-        });
+        // if remote has requested past values, those will be available here through configuration
+        // so you could basically change the URI & AccessKey below
+        // calling this method adds IRemoteConfigurationProvider to DI which allows you to await the configuration in a startup page if needed
+        builder.AddRemoteMaui();
+
+        // The extension method `BindConfiguration` is part of Microsoft.Extensions.Options.ConfigurationExtensions - don't hate the messenger
+        builder.Services.AddOptions<MyConfig>().BindConfiguration("");
 #if DEBUG
         builder.Logging.SetMinimumLevel(LogLevel.Trace);
         builder.Logging.AddDebug();

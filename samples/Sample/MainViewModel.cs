@@ -10,10 +10,12 @@ public partial class MainViewModel : ObservableObject
 {
     readonly IRemoteConfigurationProvider remoteProvider;
     
-    
-    //IRemoteConfigurationProvider remoteProvider
-    public MainViewModel(IOptionsMonitor<MyConfig> cfg)
+    public MainViewModel(
+        IRemoteConfigurationProvider remoteProvider, 
+        IOptionsMonitor<MyConfig> cfg
+    )
     {
+        this.remoteProvider = remoteProvider;
         cfg.OnChange(this.Update);
         this.Update(cfg.CurrentValue);
     }
@@ -36,14 +38,14 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     async Task Refresh(CancellationToken cancellationToken)
     {
-        // try
-        // {
-        //     await this.remoteProvider.LoadAsync(cancellationToken);
-        // }
-        // catch (OperationCanceledException) {}
-        // catch (Exception ex)
-        // {
-        //     await App.Current.MainPage.DisplayAlert(ex.ToString(), "ERROR", "OK");
-        // }
+        try
+        {
+            await this.remoteProvider.LoadAsync(cancellationToken);
+        }
+        catch (OperationCanceledException) {}
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert(ex.ToString(), "ERROR", "OK");
+        }
     }
 }

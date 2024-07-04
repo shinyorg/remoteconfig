@@ -33,20 +33,29 @@ public class RemoteConfigurationProvider(RemoteConfig config) : ConfigurationPro
         }
         private set => this.Data[LAST_LOAD_KEY] = value.ToString();
     }
-    
-    
+
+
+    readonly SemaphoreSlim semaphore = new(1);
     public async Task LoadAsync(CancellationToken cancellationToken = default)
     {
-        var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Add("X-KEY", config.AccessToken);
-        var content = await httpClient.GetStringAsync(config.Uri, cancellationToken);
+        try
+        {
+            // there can only be one!
+            await this.semaphore.WaitAsync(cancellationToken);
 
-        // TODO: this is not triggering changes from the json provider - could be the options monitor too?
-        await File
-            .WriteAllTextAsync(config.ConfigurationFilePath, content, cancellationToken)
-            .ConfigureAwait(false);
+            var httpClient = new HttpClient();
+            var content = await httpClient.GetStringAsync(config.Uri, cancellationToken);
 
-        this.LastLoaded = DateTimeOffset.UtcNow;
-        // this.OnReload();
+            // TODO: this is not triggering changes from the json provider - could be the options monitor too?
+            await File
+                .WriteAllTextAsync(config.ConfigurationFilePath, content, cancellationToken)
+                .ConfigureAwait(false);
+
+            this.LastLoaded = DateTimeOffset.UtcNow;
+        }
+        finally
+        {
+            this.semaphore.Release();
+        }
     }
 }

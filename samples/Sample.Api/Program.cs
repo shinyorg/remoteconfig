@@ -1,6 +1,3 @@
-using System.Security.Authentication;
-using Microsoft.AspNetCore.Mvc;
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpContextAccessor();
 
@@ -8,16 +5,9 @@ var app = builder.Build();
 
 app.MapGet(
     "/configuration", 
-    async (
-        [FromServices] IHttpContextAccessor http,
-        [FromServices] IConfiguration cfg
-    ) =>
+    async (CancellationToken ct) =>
     {
-        var accessKey = http.HttpContext!.Request.Headers["X-Key"];
-        if (accessKey != cfg["AccessKey"])
-            throw new InvalidCredentialException("You do not belong here");
-        
-        await Task.Delay(5000);
+        await Task.Delay(5000, ct);
         return new
         {
             ValueFrom = "Server",

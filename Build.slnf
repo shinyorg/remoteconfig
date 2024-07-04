@@ -1,0 +1,9 @@
+{
+  "solution": {
+    "path": "ShinyMediator.sln",
+    "projects": [
+      "src\\Shiny.Extensions.Configuration.Remote\\Shiny.Extensions.Configuration.Remote.csproj",
+      "src\\Shiny.Extensions.Configuration.Remote.Maui\\Shiny.Extensions.Configuration.Remote.Maui.csproj"
+    ]
+  }
+}

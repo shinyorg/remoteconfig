@@ -1,2 +1,2 @@
-# remoteconfig
+# Remote Configuration Provider
  
