@@ -1,9 +1,12 @@
+using System.Text.Json;
+
 namespace Shiny.Extensions.Configuration.Remote.Infrastructure;
 
 
-public class RemoteConfigurationProvider(RemoteConfig config) : ConfigurationProvider, IRemoteConfigurationProvider
+public class RemoteConfigurationProvider(RemoteConfig config, Func<CancellationToken, Task<object>>? getData) : ConfigurationProvider, IRemoteConfigurationProvider
 {
     const string LAST_LOAD_KEY = "__LastLoaded";
+    
     public override void Load()
     {
         base.Load();
@@ -38,6 +41,7 @@ public class RemoteConfigurationProvider(RemoteConfig config) : ConfigurationPro
     }
 
 
+    HttpClient? httpClient;
     readonly SemaphoreSlim semaphore = new(1);
     public async Task LoadAsync(CancellationToken cancellationToken = default)
     {
@@ -57,18 +61,34 @@ public class RemoteConfigurationProvider(RemoteConfig config) : ConfigurationPro
             // if (wasWaiting)
             //     return;
 
-            var httpClient = new HttpClient();
-            var content = await httpClient.GetStringAsync(config.Uri, cancellationToken);
+            if (getData == null)
+            {
+                this.httpClient ??= new();
+                var content = await this.httpClient
+                    .GetStringAsync(config.Uri, cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                var obj = await getData.Invoke(cancellationToken).ConfigureAwait(false);
+                var json = JsonSerializer.Serialize(obj);
+                await this.WriteJson(json, cancellationToken);
+            }
 
-            await File
-                .WriteAllTextAsync(config.ConfigurationFilePath, content, cancellationToken)
-                .ConfigureAwait(false);
-
-            this.LastLoaded = DateTimeOffset.UtcNow;
         }
         finally
         {
             this.semaphore.Release();
         }
+    }
+
+
+    async Task WriteJson(string json, CancellationToken cancellationToken)
+    {
+        await File
+            .WriteAllTextAsync(config.ConfigurationFilePath, json, cancellationToken)
+            .ConfigureAwait(false);
+
+        this.LastLoaded = DateTimeOffset.UtcNow;
     }
 }
