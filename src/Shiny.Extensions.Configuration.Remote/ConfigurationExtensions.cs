@@ -12,6 +12,7 @@ public static class ConfigurationExtensions
     /// <param name="builder">The configuration builder</param>
     /// <param name="configurationFilePath">The location of where the remote settings should be persisted</param>
     /// <param name="getConfigurationUri">This allows you to get the configuration URI from the previous remote call & allows you to update the ConfigurationUri if needed</param>
+    /// <param name="getData">If you wish to control how/what data is returned, pass this function</param>
     /// <param name="waitForRemoteLoad">If you want the network call to be waited until completion before returning</param>
     /// <param name="services">If presented to the extension method, IRemoteConfigurationProvider is installed to the service container</param>
     /// <returns>The current configuration builder to allow for chaining</returns>
@@ -19,6 +20,7 @@ public static class ConfigurationExtensions
         this IConfigurationBuilder builder, 
         string configurationFilePath, 
         Func<IConfiguration, string> getConfigurationUri, 
+        Func<CancellationToken, Task<object>>? getData = null,
         bool waitForRemoteLoad = true,
         IServiceCollection? services = null
     )
@@ -30,7 +32,7 @@ public static class ConfigurationExtensions
             uri,
             waitForRemoteLoad,
             configurationFilePath
-        ), services));
+        ), getData, services));
         
         return builder;
     }

@@ -17,7 +17,7 @@ public static class MauiProgram
         // if remote has requested past values, those will be available here through configuration
         // so you could basically change the URI & AccessKey below
         // calling this method adds IRemoteConfigurationProvider to DI which allows you to await the configuration in a startup page if needed
-        builder.AddRemoteMaui();
+        builder.AddRemoteConfigurationMaui();
 
         // The extension method `BindConfiguration` is part of Microsoft.Extensions.Options.ConfigurationExtensions - don't hate the messenger
         builder.Services.AddOptions<MyConfig>().BindConfiguration("");
