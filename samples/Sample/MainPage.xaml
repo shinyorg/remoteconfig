@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Sample"
+             x:DataType="local:MainViewModel"
+             x:Class="Sample.MainPage"
+             Title="Remote Configuration">
+    <TableView Intent="Settings">
+        <TableRoot>
+            <TableSection Title="API Configuration">
+                <TextCell Text="URI" Detail="{Binding ConfigurationUri}" />
+                <TextCell Text="Access Token" Detail="{Binding AccessToken}" />
+            </TableSection>
+            
+            <TableSection Title="Values">
+                <TextCell Text="From" Detail="{Binding ValueFrom}" />
+                <TextCell Text="Value" Detail="{Binding TheValue}" />
+            </TableSection>
+            
+            <TableSection>
+                <!-- <TextCell Text="Last Loaded" /> -->
+                <TextCell Text="Reload" 
+                          Command="{Binding RefreshCommand}" />
+            </TableSection>
+        </TableRoot>
+    </TableView>
+</ContentPage>
