@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Shiny.Extensions.Configuration.Remote.Infrastructure;
 
 
-public class RemoteConfigurationSource(RemoteConfig config, Func<CancellationToken, Task<object>>? getData, IServiceCollection? services) : IConfigurationSource
+public class RemoteConfigurationSource(RemoteConfig config, Func<RemoteConfig, CancellationToken, Task<object>>? getData, IServiceCollection? services) : IConfigurationSource
 {
     public IConfigurationProvider Build(IConfigurationBuilder builder)
     {

@@ -1,17 +1,36 @@
-namespace Shiny.Extensions.Configuration.Remote.Maui;
+using Microsoft.Extensions.Configuration;
+using Shiny.Extensions.Configuration.Remote;
+
+namespace Shiny;
 
 
 public static class MauiAppBuilderExtensions
 {
+    public static IConfigurationBuilder AddRemoteMaui(
+        this IConfigurationBuilder builder,
+        string configurationUri,
+        string configurationFileName = "remotesettings.json",
+        Func<RemoteConfig, CancellationToken, Task<object>>? getData = null)
+    {
+        return builder.AddRemote(
+            Path.Combine(FileSystem.AppDataDirectory, configurationFileName),
+            configurationUri,
+            getData,
+            false,
+            null
+       );
+    }
+    
     public static MauiAppBuilder AddRemoteConfigurationMaui(
         this MauiAppBuilder builder, 
-        Func<CancellationToken, Task<object>>? getData = null, 
+        string configurationUri,
+        Func<RemoteConfig, CancellationToken, Task<object>>? getData = null, 
         string configurationFileName = "remotesettings.json"
     )
     {
         builder.Configuration.AddRemote(
             Path.Combine(FileSystem.AppDataDirectory, configurationFileName),
-            config => config["ConfigurationUri"]!,
+            configurationUri,
             getData,
             false,
             builder.Services

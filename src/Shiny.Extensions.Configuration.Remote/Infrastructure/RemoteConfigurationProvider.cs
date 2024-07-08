@@ -1,9 +1,10 @@
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Shiny.Extensions.Configuration.Remote.Infrastructure;
 
 
-public class RemoteConfigurationProvider(RemoteConfig config, Func<CancellationToken, Task<object>>? getData) : ConfigurationProvider, IRemoteConfigurationProvider
+public class RemoteConfigurationProvider(RemoteConfig config, Func<RemoteConfig, CancellationToken, Task<object>>? getData) : ConfigurationProvider, IRemoteConfigurationProvider
 {
     const string LAST_LOAD_KEY = "__LastLoaded";
     
@@ -64,17 +65,19 @@ public class RemoteConfigurationProvider(RemoteConfig config, Func<CancellationT
             if (getData == null)
             {
                 this.httpClient ??= new();
-                var content = await this.httpClient
+                var json = await this.httpClient
                     .GetStringAsync(config.Uri, cancellationToken)
                     .ConfigureAwait(false);
+
+                JsonObject.Parse(json);
+                await this.WriteJson(json, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                var obj = await getData.Invoke(cancellationToken).ConfigureAwait(false);
+                var obj = await getData.Invoke(config, cancellationToken).ConfigureAwait(false);
                 var json = JsonSerializer.Serialize(obj);
-                await this.WriteJson(json, cancellationToken);
+                await this.WriteJson(json, cancellationToken).ConfigureAwait(false);
             }
-
         }
         finally
         {

@@ -19,17 +19,17 @@ public static class ConfigurationExtensions
     public static IConfigurationBuilder AddRemote(
         this IConfigurationBuilder builder, 
         string configurationFilePath, 
-        Func<IConfiguration, string> getConfigurationUri, 
-        Func<CancellationToken, Task<object>>? getData = null,
+        string configurationUri,
+        Func<RemoteConfig, CancellationToken, Task<object>>? getData = null,
         bool waitForRemoteLoad = true,
         IServiceCollection? services = null
     )
     {
         builder.AddJsonFile(configurationFilePath, true, true);
         var configuration = builder.Build();
-        var uri = getConfigurationUri.Invoke(configuration);
         builder.Add(new RemoteConfigurationSource(new RemoteConfig(
-            uri,
+            configurationUri,
+            configuration,
             waitForRemoteLoad,
             configurationFilePath
         ), getData, services));
