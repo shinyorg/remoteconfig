@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Configuration;
-using Shiny.Extensions.Configuration.Remote;
+using Shiny.Extensions.Configuration;
 
 namespace Shiny;
 

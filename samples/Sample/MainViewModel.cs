@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Options;
-using Shiny.Extensions.Configuration.Remote;
+using Shiny.Extensions.Configuration;
 
 namespace Sample;
 

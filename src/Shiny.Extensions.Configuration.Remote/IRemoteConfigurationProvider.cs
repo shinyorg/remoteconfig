@@ -1,4 +1,4 @@
-﻿namespace Shiny.Extensions.Configuration.Remote;
+﻿namespace Shiny.Extensions.Configuration;
 
 public interface IRemoteConfigurationProvider : IConfigurationProvider
 {

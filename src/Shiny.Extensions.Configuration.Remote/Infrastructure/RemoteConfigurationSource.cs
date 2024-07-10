@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Shiny.Extensions.Configuration.Remote.Infrastructure;
+namespace Shiny.Extensions.Configuration.Infrastructure;
 
 
 public class RemoteConfigurationSource(RemoteConfig config, Func<RemoteConfig, CancellationToken, Task<object>>? getData, IServiceCollection? services) : IConfigurationSource

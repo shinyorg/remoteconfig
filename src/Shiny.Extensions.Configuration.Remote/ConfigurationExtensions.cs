@@ -1,7 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shiny.Extensions.Configuration.Remote.Infrastructure;
+using Shiny.Extensions.Configuration;
+using Shiny.Extensions.Configuration.Infrastructure;
 
-namespace Shiny.Extensions.Configuration.Remote;
+namespace Shiny;
 
 
 public static class ConfigurationExtensions

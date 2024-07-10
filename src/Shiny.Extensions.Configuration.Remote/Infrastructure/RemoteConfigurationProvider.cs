@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace Shiny.Extensions.Configuration.Remote.Infrastructure;
+namespace Shiny.Extensions.Configuration.Infrastructure;
 
 
 public class RemoteConfigurationProvider(RemoteConfig config, Func<RemoteConfig, CancellationToken, Task<object>>? getData) : ConfigurationProvider, IRemoteConfigurationProvider
